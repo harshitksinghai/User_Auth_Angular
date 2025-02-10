@@ -1,10 +1,5 @@
 import { Routes } from '@angular/router';
 import { MarketingComponent } from './marketing/pages/marketing/marketing.component';
 
-export const routes: Routes = [
-    {
-        path: '',
-        pathMatch: 'full',
-        component: MarketingComponent
-    },
-];
+
+export const routes: Routes = [];

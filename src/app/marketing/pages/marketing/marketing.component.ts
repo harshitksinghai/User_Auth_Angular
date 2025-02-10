@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../components/header/header.component";
-import { HomeComponent } from "../../components/home/home.component";
+import { MarketingHeaderComponent } from "../../components/marketing-header/marketing-header.component";
+import { MarketingInfoComponent } from "../../components/marketing-info/marketing-info.component";
 
 @Component({
   selector: 'app-marketing',
-  imports: [HeaderComponent, HomeComponent],
+  imports: [MarketingHeaderComponent, MarketingInfoComponent],
   templateUrl: './marketing.component.html',
   styleUrl: './marketing.component.scss'
 })

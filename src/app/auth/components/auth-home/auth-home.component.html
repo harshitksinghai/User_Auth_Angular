@@ -5,11 +5,15 @@
     <div *ngIf="type === 'register'">
         <h1>Register</h1>
     </div>
-
+    <br>
+    <div *ngIf="isLoading()">
+        <p>Loading...</p>
+    </div>
     <br>
 
     <div>
-        
+        <app-verify-email *ngIf="authMode() === 'VERIFY-EMAIL'"></app-verify-email>
     </div>
+
 </div>
   

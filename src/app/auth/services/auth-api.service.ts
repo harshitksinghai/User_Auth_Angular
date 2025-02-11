@@ -11,13 +11,13 @@ export class AuthApiService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/api/auth';
 
-  verifyEmail(email: string): Observable<{CommonResponse: CommonResponse}> {
+  verifyEmail(email: string): Observable<CommonResponse> {
     const params = new HttpParams().set('email', email);
-    return this.http.post<{CommonResponse: CommonResponse}>(`${this.baseUrl}/verify-email`, null, { params });
+    return this.http.post<CommonResponse>(`${this.baseUrl}/verify-email`, null, { params });
   }
 
-  login(data: LoginRequest): Observable<{CommonResponse: CommonResponse}> {
-    return this.http.post<{CommonResponse: CommonResponse}>(`${this.baseUrl}/login`, data);
+  login(data: LoginRequest): Observable<CommonResponse> {
+    return this.http.post<CommonResponse>(`${this.baseUrl}/login`, data);
   }
 
   sendOtp(email: string): Observable<CommonResponse> {

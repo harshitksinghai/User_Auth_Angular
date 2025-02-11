@@ -23,4 +23,10 @@ export class AuthStateService {
   setError(error: string | null) {
     this.error.set(error)
   }
+  clearError() {
+    this.error.set(null)
+  }
+  getOtpMode() {
+    return this.otpMode();
+  }
 }

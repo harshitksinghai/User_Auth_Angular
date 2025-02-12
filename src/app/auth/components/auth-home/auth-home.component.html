@@ -13,7 +13,11 @@
 
     <div>
         <app-verify-email *ngIf="authMode() === 'VERIFY-EMAIL'"></app-verify-email>
+        <app-login-password *ngIf="authMode() === 'LOGIN-PASSWORD'" [onEmailChange]="handleEmailChange"></app-login-password>
+        <!-- <app-login-password *ngIf="authMode() === 'LOGIN-PASSWORD'" (emailChanged)="handleEmailChange($event)">></app-login-password> -->
+        <app-otp *ngIf="authMode() === 'OTP'" [onEmailChange]="handleEmailChange"></app-otp>
+        <app-reset-password *ngIf="authMode() === 'RESET-PASSWORD'"></app-reset-password>
+        <app-register *ngIf="authMode() === 'REGISTER'" [onEmailChange]="handleEmailChange"></app-register>
     </div>
 
 </div>
-  

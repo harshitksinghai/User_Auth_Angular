@@ -1,0 +1,6 @@
+<div>
+    <input [(ngModel)]="email" (ngModelChange)="onEmailChange(email)" placeholder="Enter Email">
+    <input [(ngModel)]="otp" placeholder="Enter Otp">
+    <label (click)="handleSendOtp()">Resend Otp</label>
+    <button (click)="handleOtpVerification()">Continue</button>
+</div>

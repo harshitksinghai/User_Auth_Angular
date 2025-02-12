@@ -1,11 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthApiService } from './auth-api.service';
 import { AuthStateService } from './auth-state.service';
-import { CommonResponse } from '../../utils/commonTypes';
 import { catchError, tap, throwError } from 'rxjs';
 import { AuthMode } from '../enums/AuthMode';
 import { OtpMode } from '../enums/OtpMode';
-import { LoginRequest } from '../utils/authTypes';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -39,11 +37,12 @@ export class AuthService {
       .subscribe(() => {
         this.authState.setIsLoading(false);
       });
+    this.authState.setAuthMode(AuthMode.LOGIN_PASSWORD);
   }
 
   handleLoginPassword(email: string, password: string) {
     this.authState.setIsLoading(true);
-    this.authApi.login({email, password}).pipe(
+    this.authApi.login({ email, password }).pipe(
       tap((loginResponse) => {
         if (loginResponse.status) {
           this.authApi.checkOnboard().pipe(
@@ -77,43 +76,43 @@ export class AuthService {
       }),
       catchError((error) => this.handleError('Forgot Password failed to execute.', error))
     )
-    .subscribe();
+      .subscribe();
   }
 
-  handleOtpVerification(email: string, otp: string){
+  handleOtpVerification(email: string, otp: string) {
     this.authState.setIsLoading(true);
-    this.authApi.verifyOtp({email, otp}).pipe(
+    this.authApi.verifyOtp({ email, otp }).pipe(
       tap((CommonResponse) => {
-        if(CommonResponse.status){
-          if(this.currentOtpMode === OtpMode.LOGIN){
+        if (CommonResponse.status) {
+          if (this.currentOtpMode === OtpMode.LOGIN) {
             this.authState.setOtpMode(null);
             this.router.navigate(['/home']);
           }
-          else if(this.currentOtpMode === OtpMode.REGISTER){
+          else if (this.currentOtpMode === OtpMode.REGISTER) {
             this.authState.setOtpMode(null);
             this.authState.setAuthMode(AuthMode.REGISTER);
           }
-          else if(this.currentOtpMode === OtpMode.RESET_PASSWORD){
+          else if (this.currentOtpMode === OtpMode.RESET_PASSWORD) {
             this.authState.setOtpMode(null);
             this.authState.setAuthMode(AuthMode.RESET_PASSWORD);
           }
         }
-        else{
+        else {
           this.handleError('Invalid OTP', { error: { message: 'The OTP you entered is invalid.' } });
         }
       }),
       catchError((error) => this.handleError('OTP Verification failed to execute.', error))
     )
-    .subscribe(() => {
-      this.authState.setIsLoading(false);
-    });
+      .subscribe(() => {
+        this.authState.setIsLoading(false);
+      });
   }
-  
-  handleChangePasswordAndLogin(email: string, password: string){
+
+  handleChangePasswordAndLogin(email: string, password: string) {
     this.authState.setIsLoading(true);
-    this.authApi.changePasswordAndLogin({email, password}).pipe(
+    this.authApi.changePasswordAndLogin({ email, password }).pipe(
       tap((changePasswordAndLoginResponse) => {
-        if(changePasswordAndLoginResponse.status){
+        if (changePasswordAndLoginResponse.status) {
           this.authApi.checkOnboard().pipe(
             tap((checkOnBoardResponse) => {
               if (checkOnBoardResponse.status) {
@@ -131,28 +130,36 @@ export class AuthService {
         }
       }),
       catchError((error) => this.handleError('Change Password and Login failed to execute.', error))
-      )
+    )
       .subscribe(() => {
         this.authState.setIsLoading(false);
       });
   }
 
-  handleRegister(email: string, password: string){
+  handleRegister(email: string, password: string) {
     this.authState.setIsLoading(true);
-    this.authApi.register({email, password}).pipe(
+    this.authApi.register({ email, password }).pipe(
       tap((registerResponse) => {
-        if(registerResponse.status){
+        if (registerResponse.status) {
           this.router.navigate(['/onboard'])
         }
-        else{
+        else {
           this.handleError('Register failed to execute.', { error: { message: 'Register failed to execute.' } });
         }
-  }),
-  catchError((error) => this.handleError('Register failed to execute.', error))
-)
-.subscribe(() => {
-  this.authState.setIsLoading(false);
-})
+      }),
+      catchError((error) => this.handleError('Register failed to execute.', error))
+    )
+      .subscribe(() => {
+        this.authState.setIsLoading(false);
+      })
+  }
+
+  handleSendOtp(email: string){
+    this.authApi.sendOtp(email).pipe(
+      tap((CommonResponse) => {}),
+      catchError((error) => this.handleError('Send OTP failed to execute.', error))
+    )
+      .subscribe();
   }
 
   private handleError(defaultMessage: string, error: any) {

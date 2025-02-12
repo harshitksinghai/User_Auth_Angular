@@ -10,8 +10,5 @@ export const authRoutes: Routes = [
     {
         path: 'onboard',
         component: OnBoardComponent
-    },
-    {
-        
     }
 ];

@@ -1,0 +1,10 @@
+<div>
+    <input [(ngModel)]="email" (ngModelChange)="onEmailChange(email)" placeholder="Enter Email">
+    <input [(ngModel)]="password" placeholder="Enter Password">
+    <input [(ngModel)]="confirmPassword" placeholder="Re-enter Password">
+    <button (click)="handleRegister()" [disabled]="password === '' || confirmPassword === '' || password !== confirmPassword">Reset Password</button>
+    <div *ngIf="password !== confirmPassword && confirmPassword !== ''" style="color: red;">
+        Passwords do not match
+    </div>
+</div>
+

@@ -11,12 +11,26 @@ export class AuthStateService {
   isLoading = signal<boolean>(false);
   error = signal<string | null>(null);
 
+  email = signal<string>('');
+
+  setEmail(email: string) {
+    this.email.set(email)
+  }
+  getEmail() {
+    return this.email();
+  }
+
   setAuthMode(mode: AuthMode) {
     this.authMode.set(mode)
   }
+
   setOtpMode(mode: OtpMode | null) {
     this.otpMode.set(mode)
   }
+  getOtpMode() {
+    return this.otpMode();
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading.set(isLoading)
   }
@@ -26,7 +40,5 @@ export class AuthStateService {
   clearError() {
     this.error.set(null)
   }
-  getOtpMode() {
-    return this.otpMode();
-  }
+  
 }
